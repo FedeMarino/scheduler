@@ -1,13 +1,13 @@
 /* --- Base Styles & Variables --- */
 :root {
     --primary-color: #4a90e2;
-    --secondary-color: #50e3c2;
+    --secondary-color: #6c757d; /* Adjusted secondary */
+    --danger-color: #dc3545; /* Bootstrap danger red */
     --border-color: #e0e0e0;
     --background-light: #f8f9fa;
     --background-white: #ffffff;
     --text-dark: #333333;
     --text-light: #666666;
-    --danger-color: #e53935; /* For delete buttons */
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
     --shadow-md: 0 4px 6px rgba(0,0,0,0.08);
     --border-radius: 8px;
@@ -40,19 +40,34 @@ h3 { font-size: 1.0em; margin-bottom: 10px; border: none; padding-bottom: 5px; d
     margin-bottom: 15px;
 }
 
+/* --- General Action Button Style --- */
+.action-button {
+    padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer;
+    font-size: 0.9em; font-weight: 500; transition: background-color 0.2s ease, opacity 0.2s ease;
+    flex-shrink: 0; flex-grow: 0; line-height: 1.4; /* Ensure text aligns well */
+}
+.action-button.primary { background-color: var(--primary-color); color: white; }
+.action-button.primary:hover { background-color: #3a7ac0; }
+.action-button.secondary { background-color: var(--secondary-color); color: white; }
+.action-button.secondary:hover { background-color: #5a6268; }
+.action-button.danger { background-color: var(--danger-color); color: white; }
+.action-button.danger:hover { background-color: #c82333; }
+
+
 /* --- Top Control Bar --- */
 .control-bar {
     display: flex; justify-content: space-between; align-items: flex-start;
     gap: 15px; margin-bottom: 15px; flex-wrap: wrap; padding: 15px;
 }
-.task-creation { flex: 1 1 350px; min-width: 280px; }
-.schedule-controls { flex: 1 1 250px; min-width: 200px; }
+.task-creation { flex: 2 1 300px; min-width: 280px; } /* Give slightly more basis */
+.schedule-controls { flex: 1 1 200px; min-width: 180px; }
+.data-management { flex: 1 1 200px; min-width: 180px; } /* New section */
 .time-summary { flex: 0 0 auto; min-width: 140px; text-align: right; align-self: center; border-top: none; padding-top: 0; margin-top: 0; font-size: 0.9em; }
 .time-summary p { margin: 2px 0; }
 
 /* --- Task Input Area --- */
 .task-input { display: flex; gap: 8px; align-items: center; flex-wrap: nowrap; }
-.task-input input[type="text"], .task-input select, .task-input input[type="color"], .task-input button {
+.task-input input[type="text"], .task-input select, .task-input input[type="color"] {
     flex-shrink: 1; padding: 8px 10px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.9em;
 }
 .task-input input[type="text"] { flex-grow: 1; min-width: 80px; }
@@ -61,11 +76,10 @@ h3 { font-size: 1.0em; margin-bottom: 10px; border: none; padding-bottom: 5px; d
 .task-input input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
 .task-input input[type="color"]::-webkit-color-swatch { border: none; border-radius: 4px; }
 .task-input input[type="color"]::-moz-color-swatch { border: none; border-radius: 4px; }
-.task-input button { padding: 8px 12px; background-color: var(--primary-color); color: white; border: none; font-weight: 500; transition: background-color 0.2s ease; flex-shrink: 0; flex-grow: 0; cursor: pointer; }
-.task-input button:hover { background-color: #3a7ac0; }
 
-#cancel-edit-btn { background: none; border: none; color: var(--text-light); font-size: 0.8em; cursor: pointer; padding: 2px 5px; margin-left: 10px; }
-#cancel-edit-btn:hover { color: var(--text-dark); text-decoration: underline; }
+/* --- Cancel Edit Button Style --- */
+#cancel-edit-btn { margin-left: 10px; font-size: 0.8em; padding: 6px 8px; }
+#cancel-edit-btn:hover { background-color: #eee; }
 
 /* --- Schedule Controls Area (Expandable) --- */
 .schedule-controls { flex-direction: column; align-items: stretch; }
@@ -73,31 +87,21 @@ h3 { font-size: 1.0em; margin-bottom: 10px; border: none; padding-bottom: 5px; d
 .expandable-toggle:hover { background-color: #f0f0f0; }
 .expandable-toggle span { display: inline-block; transition: transform 0.3s ease; font-size: 0.8em; }
 .expandable-toggle.expanded span { transform: rotate(180deg); }
-
 .expandable-content { display: none; padding-top: 10px; align-items: center; gap: 8px; flex-wrap: wrap; }
 .expandable-content.visible { display: flex; }
-
 .expandable-content label { font-size: 0.9em; color: var(--text-light); flex-shrink: 0; }
 .expandable-content select { padding: 8px 5px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.9em; min-width: fit-content; width: auto; flex-grow: 0; flex-shrink: 1; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 5px top 50%; background-size: .65em auto; padding-right: 20px; }
-.expandable-content button { padding: 8px 15px; background-color: var(--primary-color); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9em; font-weight: 500; transition: background-color 0.2s ease; flex-shrink: 0; flex-grow: 0; margin-left: auto; }
-.expandable-content button:hover { background-color: #3a7ac0; }
+#update-schedule-view { margin-left: auto; } /* Keep update button pushed right */
+
+/* --- Data Management Area --- */
+.data-management { flex-direction: column; align-items: stretch; }
+.action-buttons-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
+.action-buttons-group .action-button { flex-grow: 1; /* Allow buttons to grow to fill space */ }
 
 /* --- Main Content Area --- */
-.content-area {
-    display: flex; /* Default is row, which is side-by-side */
-    gap: 15px;
-    align-items: stretch; /* Stretch items vertically */
-    width: 100%;
-    overflow-x: auto; /* Allow horizontal scrolling if content overflows */
-}
-.task-pool-container, .schedule-display-area {
-    flex: 1 1 0; /* Grow/shrink equally, basis 0 */
-    min-width: 250px; /* Minimum width before scroll starts */
-    display: flex; flex-direction: column; /* Internal content stacks vertically */
-}
-.task-pool-container .task-list, .schedule-display-area .timeline-wrapper {
-    flex-grow: 1; overflow-y: auto; max-height: 70vh;
-}
+.content-area { display: flex; gap: 15px; align-items: stretch; width: 100%; overflow-x: auto; }
+.task-pool-container, .schedule-display-area { flex: 1 1 0; min-width: 250px; display: flex; flex-direction: column; }
+.task-pool-container .task-list, .schedule-display-area .timeline-wrapper { flex-grow: 1; overflow-y: auto; max-height: 70vh; }
 .task-pool-container .task-list { min-height: 200px; }
 
 /* --- Task Lists & Items --- */
@@ -139,29 +143,28 @@ h3 { font-size: 1.0em; margin-bottom: 10px; border: none; padding-bottom: 5px; d
 .time-summary span { color: var(--primary-color); font-weight: 700; margin-left: 5px; display: inline-block; min-width: 40px; }
 
 /* --- Mobile/Responsive Adjustments --- */
-/* REMOVED the stacking rule for .content-area */
+/* Keep content side-by-side */
 @media (max-width: 800px) {
-    /* .content-area { flex-direction: column; align-items: stretch; overflow-x: hidden; } */ /* <--- REMOVED THIS LINE */
-    /* .task-pool-container, .schedule-display-area { min-width: unset; flex-basis: auto; width: 100%; } */ /* <--- REMOVED THIS LINE */
-
-    /* Adjust max-height for potentially shorter viewports when side-by-side */
     .task-pool-container .task-list,
     .schedule-display-area .timeline-wrapper {
-        max-height: 65vh; /* You might adjust this based on testing */
+        max-height: 65vh;
     }
 }
 
 /* Adjust control bar stacking & task input for smaller screens */
-@media (max-width: 650px) {
+@media (max-width: 700px) { /* Adjusted breakpoint */
     .control-bar { flex-direction: column; align-items: stretch; }
-    .task-input { flex-wrap: nowrap; } /* Keep task input horizontal */
+    /* Keep task input horizontal */
+    .task-input { flex-wrap: nowrap; }
     .task-input input[type="text"] { min-width: 60px; }
     .task-input select#task-duration { min-width: 70px; font-size: 0.85em; padding: 8px 3px;}
     .task-input input[type="color"] { min-width: 30px; width: 30px; height: 30px;}
     .task-input button { padding: 8px 10px; font-size: 0.85em; }
+
     .expandable-content select { max-width: 100px; }
     .expandable-content button { width: auto; margin-left: auto; }
     .time-summary { text-align: left; margin-top: 10px; }
+    .data-management { order: 5; } /* Move data management down in stacked view */
 }
 
 /* Further adjustments for very small screens */
@@ -169,8 +172,11 @@ h3 { font-size: 1.0em; margin-bottom: 10px; border: none; padding-bottom: 5px; d
     body { padding: 5px; }
     .card { padding: 10px; }
     .control-bar { gap: 10px; padding: 10px; }
-    .content-area { gap: 10px; } /* Reduce gap between columns */
+    .content-area { gap: 10px; }
     h2 { font-size: 1.05em; }
     h3 { font-size: 0.9em; }
     .time-summary { font-size: 0.85em; }
+    .action-buttons-group .action-button {
+        flex-basis: 100%; /* Stack action buttons fully */
+    }
 }
